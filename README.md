@@ -7,6 +7,7 @@
 
 * загрузка видео пользователями
 * автоматическая обработка видео
+* создание каналов
 * подписки на каналы
 * лайки, комментарии, просмотры
 * сбор статистики
@@ -61,5 +62,6 @@
 
 ## Список источников
 1. [Youtube Statistics And User Trends In 2025](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)
+
 
 
