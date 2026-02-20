@@ -57,7 +57,7 @@
 * DAU (дневная активная аудитория): 122 млн пользователей [[1](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)]
 * На платформу загружается около 500 часов видео каждую минуту [[2](https://www.globalmediainsight.com/blog/youtube-users-statistics)]
 * Средняя длина видео на YouTube примерно 11,7 минут [[2](https://www.globalmediainsight.com/blog/youtube-users-statistics)]
-* Пользователи в среднем смотрят видео около 19–30 минут в день[[3](https://affmaven.com/ru/youtube-statistics)]
+* Пользователи в среднем смотрят видео около 19–30 минут в день [[3](https://affmaven.com/ru/youtube-statistics)]
 
 ## Распределение нагрузки
 ### Геораспределение
@@ -72,6 +72,7 @@
 1. [Youtube Statistics And User Trends In 2025](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)
 2. [YOUTUBE STATISTICS 2026 (DEMOGRAPHICS, USERS BY COUNTRY & MORE)](https://www.globalmediainsight.com/blog/youtube-users-statistics)
 3. [Статистика YouTube за 2026 год: ключевые выводы и тенденции](https://affmaven.com/ru/youtube-statistics)
+
 
 
 
