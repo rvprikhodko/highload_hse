@@ -53,8 +53,8 @@
 ### Размер аудитории
 Для расчётной модели принимаем:
 
-* MAU (месячная аудитория): 2.7 млрд пользователей
-* DAU (дневная активная аудитория): 122 млн пользователей
+* MAU (месячная аудитория): 2.7 млрд пользователей [[1](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)]
+* DAU (дневная активная аудитория): 122 млн пользователей [[1](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)]
 
 ## Распределение нагрузки
 ### Геораспределение
@@ -67,6 +67,7 @@
 
 ## Список источников
 1. [Youtube Statistics And User Trends In 2025](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)
+
 
 
 
