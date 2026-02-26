@@ -180,7 +180,9 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 
 Если каждое видео (3.6 млн в сутки) кодируется в 5 форматов, то:
 
+```
 3 600 000 × 5 = 18 000 000 задач транскодирования в сутки (208 задач в секунду)
+```
 
 ## Сводная таблица
 
@@ -202,5 +204,6 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
