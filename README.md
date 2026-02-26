@@ -60,6 +60,7 @@
 * 5.76 млн видео загружаются ежедневно [[5](https://thumbnailtest.com/stats/youtube/)]
 * Средняя длина видео на YouTube примерно 11,7 минут [[2](https://www.globalmediainsight.com/blog/youtube-users-statistics)]
 * Пользователи в среднем смотрят видео около 19–30 минут в день [[3](https://affmaven.com/ru/youtube-statistics)]
+* 5 млрд просмотров в сутки [[3](https://affmaven.com/ru/youtube-statistics)]
 
 ## Распределение нагрузки
 ### Геораспределение
@@ -204,6 +205,7 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
 
