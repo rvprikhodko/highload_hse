@@ -55,7 +55,9 @@
 
 * MAU (месячная аудитория): 2.7 млрд пользователей [[1](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)]
 * DAU (дневная активная аудитория): 122 млн пользователей [[1](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)]
-* На платформу загружается около 500 часов видео каждую минуту [[2](https://www.globalmediainsight.com/blog/youtube-users-statistics)]
+* На платформу загружается около 900 часов видео каждую минуту [[5](https://thumbnailtest.com/stats/youtube/)]
+* В среднем пользователь смотрит 9 видео за сессию [[5](https://thumbnailtest.com/stats/youtube/)]
+* 5.76 млн видео загружаются ежедневно [[5](https://thumbnailtest.com/stats/youtube/)]
 * Средняя длина видео на YouTube примерно 11,7 минут [[2](https://www.globalmediainsight.com/blog/youtube-users-statistics)]
 * Пользователи в среднем смотрят видео около 19–30 минут в день [[3](https://affmaven.com/ru/youtube-statistics)]
 
@@ -74,9 +76,9 @@
 
 ### Суммарное время просмтра в сутки (пик)
 
-DAU = 122 млн, среднее время просмотра = 30 минут
+DAU = 122 млн, среднее время просмотра = 30 минут [[1](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)]
 
-122 000 000 × 30 минут = 3 660 000 000 минут в день (61 млн часов в сутки)
+122 000 000 × 30 минут [[3](https://affmaven.com/ru/youtube-statistics)] = 3 660 000 000 минут в день (61 млн часов в сутки)
 
 ### Среднее количество одновременных зрителей
 
@@ -86,9 +88,22 @@ DAU = 122 млн, среднее время просмотра = 30 минут
 
 ### Сетевой трафик
 
-Предположим средний битрейт: 720p ≈ 5 Мбит/с (усредним, часть смотрит 360p, часть 1080p):
+Судя по источнику [4] имеем битрейт и разрешение:
 
-5 000 000 пользователей × 5 Мбит/с = 25 Тбит/с
+| Разрешение  | Средний битрейт (Мбит/с)| Примерный объем за час (ГБ/ч) |
+|-------------|-------------------------|-------------------------------|
+| 720p        | 1.5-6.0                 | 1.2-2.7                       | 
+| 1080p       | 3.0-9.0                 | 2.5-4.1                       |
+| 1440p       | 6.0-18.0                | 4.0-5.1                       |
+| 4K          | 13.0-51.0               | 5.5-23.0                      |
+
+При этом 85% просмтров в HD+ качестве [6]. Значит большая часть трафик лежит в диапазоне битрейта 3-9 Мбит.
+
+Предположим, что в таком случае средний битрейт - 7 Мбит/с:
+
+```
+5 000 000 × 7 Мбит/с = 35 000 000 Мбит/с = 35 Тбит/с
+```
 
 ## Нагрузка на загрузку видео
 
@@ -127,7 +142,7 @@ DAU = 122 млн, среднее время просмотра = 30 минут
 
 ## Сводная таблица
 
-| Параметр                     | Значение            |
+| Продуктовая метрика          | Значение            |
 |------------------------------|---------------------|
 | DAU                          | 122 млн             |
 | Одновременные пользователи   | 5 млн (пик)         |
@@ -142,3 +157,7 @@ DAU = 122 млн, среднее время просмотра = 30 минут
 1. [Youtube Statistics And User Trends In 2025](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)
 2. [YOUTUBE STATISTICS 2026 (DEMOGRAPHICS, USERS BY COUNTRY & MORE)](https://www.globalmediainsight.com/blog/youtube-users-statistics)
 3. [Статистика YouTube за 2026 год: ключевые выводы и тенденции](https://affmaven.com/ru/youtube-statistics)
+4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
+5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
+6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
