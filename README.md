@@ -238,7 +238,7 @@ SF = MAU/DAU = 2 700 000 000 / 122 000 000 = 221.3
 
 Берем размещение 11 датацентров:
 
-* Торонто, Калифорния, Нью-Йорк (Северная Америка)
+* Торонто, Сан-Франциско, Нью-Йорк (Северная Америка)
 
 * Франкфурт, Лондон, Будапешт (Европа)
 
@@ -336,3 +336,4 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
