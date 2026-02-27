@@ -302,6 +302,44 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 
         (Один и тот же IP объявляется из всех 4 ДЦ)
 
+## Модель балансировки
+
+### DNS-балансировка (GeoDNS)
+
+Пользователь отправляется в ближайший регион, используются маршруты, обеспечивающие минимальную задержку.
+
+### Anycast для CDN
+
+Один IP объявляется из нескольких регионов, BGP выбирает ближайший маршрут, BGP выбирает ближайший маршрут.
+
+### Внутренняя балансировка
+
+L4 балансировщики для TCP (видео), L7 балансировщики для API.
+
+## Механизм отказоустойчивости
+
+Если регион недоступен:
+
+* DNS TTL = 60 секунд
+* Трафик перераспределяется между соседними регионами
+* Перегрузка компенсируется запасом мощности
+
+## Запас по мощности
+
+Сделаем:
+
+```
+Capacity = 1.3 x Peak
+```
+
+Тогда получим:
+
+```
+812 000 x 1.3 = 1 056 000 RPS (API)
+35 x 1.3 = 45.5 Тбит/с (Трафик)
+```
+
+
 ## Список источников
 1. [Youtube Statistics And User Trends In 2025](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)
 2. [YOUTUBE STATISTICS 2026 (DEMOGRAPHICS, USERS BY COUNTRY & MORE)](https://www.globalmediainsight.com/blog/youtube-users-statistics)
@@ -309,5 +347,6 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
