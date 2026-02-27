@@ -278,20 +278,32 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 | Южная Америка | 3.5             |
 
 ## Схема DNS-балансировки (GeoDNS)
-                Пользователь
-                    |
-                    | DNS-запрос: api.youtube.local
-                    |
-                 GeoDNS
-                    |
-   -------------------------------------------------
-   |             |             |                  |
- North America  Europe        Asia        South America
-   |             |             |                  |
- ---------     ---------     ---------          -------
- | DC1 |       | DC1 |       | DC1 |            |DC1 |
- | DC2 |       | DC2 |       | DC2 |            |DC2 |
- | DC3 |       | DC3 |       | DC3 |
+
+                              Пользователь
+                                    |
+                                    | DNS-запрос: api.youtube.local
+                                    v
+                            +-------------------+
+                            |      GeoDNS       |
+                            | (Latency-based)   |
+                            +-------------------+
+       _____________________________|_______________________________
+      /              |               |               \
+     v               v               v                v
+
++----------------+  +----------------+  +----------------+  +----------------+
+| Северная       |  | Европа         |  | Азия           |  | Южная Америка |
+| Америка        |  |                |  |                |  |                |
+| 3 ДЦ           |  | 3 ДЦ           |  | 3 ДЦ           |  | 2 ДЦ           |
++----------------+  +----------------+  +----------------+  +----------------+
+
+   |   |   |           |   |   |           |   |   |           |       |
+   v   v   v           v   v   v           v   v   v           v       v
+
+Торонто  Калифорния  Нью-Йорк
+Франкфурт  Лондон  Будапешт
+Сингапур  Дели  Токио
+Сан-Паулу  Буэнос-Айрес
 
 ## Схема Anycast-балансировки (CDN)
 
@@ -355,6 +367,7 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
 
