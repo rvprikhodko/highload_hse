@@ -292,7 +292,7 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
      v               v               v                v
 
 +----------------+  +----------------+  +----------------+  +----------------+
-| Северная       |  | Европа         |  | Азия           |  | Южная Америка |
+| Северная       |  | Европа         |  | Азия           |  | Южная Америка  |
 | Америка        |  |                |  |                |  |                |
 | 3 ДЦ           |  | 3 ДЦ           |  | 3 ДЦ           |  | 2 ДЦ           |
 +----------------+  +----------------+  +----------------+  +----------------+
@@ -367,6 +367,7 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
 
