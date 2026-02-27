@@ -279,7 +279,7 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 
 ## Схема DNS-балансировки (GeoDNS)
 
-![GeoDNS](GeoDNS.png)
+![GeoDNS](GeoDNS_2.png)
 
 ## Схема Anycast-балансировки (CDN)
 
@@ -330,6 +330,7 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
 
