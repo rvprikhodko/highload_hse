@@ -285,7 +285,7 @@ SF = MAU/DAU = 2 700 000 000 / 122 000 000 = 221.3
 
 ## Схема DNS-балансировки (GeoDNS)
 
-![GeoDNS](GeoDNS_2.png)
+![GeoDNS](GeoDNS.png)
 
 ## Схема Anycast-балансировки (CDN)
 
@@ -336,4 +336,5 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
