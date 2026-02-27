@@ -310,7 +310,7 @@ L4 балансировщики для TCP (видео), L7 балансиров
 Если регион недоступен:
 
 * DNS TTL = 60 секунд
-* Трафик перераспределяется между соседними регионами
+* Трафик перераспределяется между ДЦ
 * Перегрузка компенсируется запасом мощности
 
 ## Запас по мощности
@@ -336,14 +336,3 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
-
-
-
-
-
-
-
-
-
-
-
