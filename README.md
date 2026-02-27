@@ -299,11 +299,11 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 
    |   |   |           |   |   |           |   |   |           |       |
    v   v   v           v   v   v           v   v   v           v       v
-
-Торонто  Калифорния  Нью-Йорк
-Франкфурт  Лондон  Будапешт
-Сингапур  Дели  Токио
-Сан-Паулу  Буэнос-Айрес
++----------------+  +----------------+  +----------------+  +----------------+
+| Торонто        |  | Франкфурт      |  | Сингапур       |  | Сан-Паулу      |
+| Калифорния     |  | Лондон         |  | Дели           |  | Буэнос-Айрес   |
+| Нью-Йорк       |  | Будапешт       |  | Токио          |  |                |
++----------------+  +----------------+  +----------------+  +----------------+
 
 ## Схема Anycast-балансировки (CDN)
 
@@ -367,6 +367,7 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
 
