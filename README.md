@@ -89,6 +89,12 @@ DAU = 122 млн, среднее время просмотра = 30 минут [
 61 000 000 / 24 ≈ 2 540 000 часов просмотра в час
 ```
 
+### Коэффициент липучести
+
+```
+SF = MAU/DAU = 2 700 000 000 / 122 000 000 = 221.3
+```
+
 С учётом пиков (вечерние часы ×2) до 5 млн одновременных зрителей
 
 ### Сетевой трафик
@@ -330,6 +336,7 @@ Capacity = 1.3 x Peak
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+
 
 
 
