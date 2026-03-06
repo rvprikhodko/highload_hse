@@ -466,6 +466,7 @@ $$
 4. [How much data does YouTube actually use?](https://www.androidauthority.com/how-much-data-does-youtube-use-964560/)
 5. [YouTube Statistics: Revenue & Growth (2026)](https://thumbnailtest.com/stats/youtube/)
 6. [Youtube Video Statistics](https://zipdo.co/youtube-video-statistics/)
+7. [Nginx benchmarks](https://openbenchmarking.org/test/pts/nginx)
 
 
 
