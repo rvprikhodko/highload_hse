@@ -670,6 +670,53 @@ Strong используется во всех остальных таблица�
 | WatchHistory    | 100 млрд       | 3.2 ПБ | Средняя           | Очень высокая        | Поток событий просмотров                |
 | WatchSessions   | 20 млрд        | 2.1 ПБ | Низкая            | Высокая              | Аналитика                               |
 
+# Физическая схема БД
+
+## Денормализованная схема БД
+
+![phys_DB](phys_DB.png)
+
+## Таблицы
+
+| Таблица                    | Тип БД / хранилище          | Шардирование                                   | Партиции                          | Индексы                                                                                                                                              | Резервирование                                     |
+| -------------------------- | --------------------------- | ---------------------------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Users                      | PostgreSQL                  | По `id` пользователя (hash-based)              | По диапазону `created_at`         | PK(`id`), UNIQUE(`email`), UNIQUE(`username`), INDEX(`created_at`)                                                                                   | Primary-replica, 2–3 реплики                       |
+| Channels                   | PostgreSQL                  | По `owner_id` или `id` канала                  | По диапазону `created_at`         | PK(`id`), INDEX(`owner_id`), INDEX(`created_at`)                                                                                                     | 2–3 реплики                                        |
+| Videos                     | PostgreSQL                  | По `channel_id` или `id` видео                 | По `published_at` (месяц/год)     | PK(`id`), INDEX(`channel_id`, `published_at`), INDEX(`category_id`, `published_at`), INDEX(`published_at`), FULLTEXT(`title`, `description`, `tags`) | 2–3 реплики                                        |
+| VideoFiles                 | PostgreSQL                  | По `video_id`                                  | По `created_at`                   | PK(`id`), INDEX(`video_id`), INDEX(`resolution`), INDEX(`created_at`)                                                                                | 2–3 реплики                                        |
+| VideoChunks                | Redis + CDN                 | По `video_file_id`                             | По `chunk_index` или `created_at` | KEY(`video_file_id:chunk_index`), INDEX(`video_file_id`)                                                                                             | Репликация в CDN + object storage, минимум 3 копии |
+| VideoStats                 | Redis                       | По `video_id` + salt/shard suffix для hot keys | Обычно не партиционируется        | KEY(`video:{video_id}`)                                                                                                                              | Репликация в Redis-cluster, snapshot + AOF         |
+| Likes / Dislikes           | PostgreSQL или Cassandra    | По `video_id` или `user_id`                    | По `created_at` (месяц)           | PK(`user_id`, `video_id`), INDEX(`video_id`, `created_at`), INDEX(`user_id`)                                                                         | 2–3 реплики                                        |
+| Comments                   | PostgreSQL                  | По `video_id`                                  | По `created_at`                   | PK(`id`), INDEX(`video_id`, `created_at`), INDEX(`parent_id`), INDEX(`user_id`)                                                                      | 2–3 реплики                                        |
+| Subscriptions              | PostgreSQL                  | По `subscriber_id`                             | По `created_at`                   | PK(`subscriber_id`, `channel_id`), INDEX(`channel_id`), INDEX(`created_at`)                                                                          | 2–3 реплики                                        |
+| WatchHistory               | ClickHouse или Cassandra    | По `user_id`                                   | По `updated_at` или `event_date`  | ORDER BY (`user_id`, `updated_at`), INDEX(`video_id`)                                                                                                | Репликация между DC, RF=3                          |
+| WatchSessions              | ClickHouse                  | По `user_id` или `video_id`                    | По `started_at` (день/месяц)      | ORDER BY (`user_id`, `started_at`), INDEX(`video_id`), INDEX(`country`)                                                                              | RF=3                                               |
+| VideoSearchIndex           | Elasticsearch               | По `video_id`                                  | По индексу времени публикации     | INDEX(`title`), INDEX(`description`), INDEX(`tags`), INDEX(`author_username`)                                                                        | Replica shards                                     |
+
+## Балансировка запросов
+
+| Данные        | Таблицы для балансировки                         | Комментарий                                                                                                                                                      |
+| ------------- |--------------------------------------------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PostgreSQL    | Videos, Channels, Comments, Subscriptions, Likes | Чтение и запись разделяются между primary и replica. Наиболее нагружены Videos, Comments и Likes. Для PostgreSQL используется connection pooling через PgBouncer |
+| Redis         | VideoStats                                       | Используется Redis Cluster с несколькими shard'ами. Hot keys (video stats популярных видео) распределяются через suffix sharding                                 |
+| ClickHouse    | WatchHistory, WatchSessions                      | Основная нагрузка — массовая запись событий и аналитические запросы. Используются distributed tables и replication                                               |
+| Elasticsearch | VideoSearchIndex                                 | Используются primary и replica shards для полнотекстового поиска и рекомендаций                                                                                  |
+| Медиаданные   | VideoFiles, VideoChunks                          | Видео и чанки хранятся в object storage и раздаются через CDN. Основная нагрузка снимается с backend-инфраструктуры                                              |
+
+
+## Схема резервного копирования
+
+| Данные         | Описание резервирования                                                                                            |
+| -------------- |--------------------------------------------------------------------------------------------------------------------|
+| PostgreSQL     | Ежедневный backup через pg_dump + WAL archiving + replication. Используется RAID 10 или RAID 6                     |
+| Redis          | RDB snapshots раз в сутки + AOF persistence.                                                                       |
+| ClickHouse     | Replication factor 2–3, резервирование между availability zones, ежедневные snapshots                              |
+| Elasticsearch  | Replica shards + snapshots индексов в object storage                                                               |
+| Медиаданные    | Видео и чанки хранятся минимум в 3 копиях в object storage + CDN cache. Используется георепликация между регионами |
+| Object storage | Amazon S3                                                                                                          |
+
+
+
 ## Список источников
 1. [Youtube Statistics And User Trends In 2025](https://www.aboutchromebooks.com/youtube-statistics-and-user-trends)
 2. [YOUTUBE STATISTICS 2026 (DEMOGRAPHICS, USERS BY COUNTRY & MORE)](https://www.globalmediainsight.com/blog/youtube-users-statistics)
