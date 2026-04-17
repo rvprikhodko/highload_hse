@@ -643,10 +643,10 @@ Strong используется во всех остальных таблица�
 | Users           | Хранение пользователей сервиса | Read/Write                 | Критичная таблица, используется для аутентификации и профиля         |
 | Channels        | Каналы пользователей           | Read-heavy                 | Используется для группировки контента и подписок                     |
 | Videos          | Метаданные видео               | Read-heavy                 | Основная сущность контента, участвует во всех сценариях              |
-| VideoFiles      | Физические версии видео        | Read-heavy                 | Содержит разные разрешения и кодеки для adaptive streaming           |
+| VideoFiles      | Физические версии видео        | Read-heavy                 | Содержит разные разрешения и кодеки                                  |
 | VideoChunks     | Чанки видео для стриминга      | Read-heavy (очень высокий) | Используется CDN, высокая частота запросов                           |
 | VideoStats      | Агрегированная статистика      | Read-heavy                 | Денормализованная таблица для быстрого чтения                        |
-| Likes           | Лайки пользователей            | Write-heavy                | Высокая нагрузка записи, eventual consistency                        |
+| Likes           | Лайки пользователей            | Write-heavy                | Высокая нагрузка записи                                              |
 | Dislikes        | Дизлайки пользователей         | Write-heavy                | Аналогично Likes                                                     |
 | Comments        | Комментарии к видео            | Mixed                      | Поддержка иерархии (parent_id), высокая нагрузка на популярные видео |
 | Subscriptions   | Подписки на каналы             | Read/Write                 | Используется для формирования ленты                                  |
@@ -662,7 +662,7 @@ Strong используется во всех остальных таблица�
 | Videos          | 500 млн        | 675 ТБ | Высокая           | Средняя              | Основная точка входа для контента       |
 | VideoFiles      | 2 млрд         | 648 ТБ | Высокая           | Средняя              | Используется при выборе качества        |
 | VideoChunks     | 100 млрд       | 28 ПБ  | Очень высокая     | Низкая               | Основная нагрузка стриминга (через CDN) |
-| VideoStats      | 500 млн        | 20 ГБ  | Очень высокая     | Высокая (асинхронно) | Hot keys, требуется кэш                 |
+| VideoStats      | 500 млн        | 20 ГБ  | Очень высокая     | Высокая (асинхронно) | Требуется кэш                           |
 | Likes           | 20 млрд        | 480 ГБ | Средняя           | Высокая              | Высокая write-нагрузка                  |
 | Dislikes        | 10 млрд        | 240 ГБ | Низкая            | Средняя              | Используется реже                       |
 | Comments        |  10 млрд       | 5.6 ПБ | Высокая           | Высокая              | Перекос на популярные видео             |
@@ -680,7 +680,7 @@ Strong используется во всех остальных таблица�
 
 | Таблица                    | Тип БД / хранилище          | Шардирование                                   | Партиции                          | Индексы                                                                                                                                              | Резервирование                                     |
 | -------------------------- | --------------------------- | ---------------------------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| Users                      | PostgreSQL                  | По `id` пользователя (hash-based)              | По диапазону `created_at`         | PK(`id`), UNIQUE(`email`), UNIQUE(`username`), INDEX(`created_at`)                                                                                   | Primary-replica, 2–3 реплики                       |
+| Users                      | PostgreSQL                  | По `id` пользователя (hash-based)              | По диапазону `created_at`         | PK(`id`), UNIQUE(`email`), UNIQUE(`username`), INDEX(`created_at`)                                                                                   | 2–3 реплики                                        |
 | Channels                   | PostgreSQL                  | По `owner_id` или `id` канала                  | По диапазону `created_at`         | PK(`id`), INDEX(`owner_id`), INDEX(`created_at`)                                                                                                     | 2–3 реплики                                        |
 | Videos                     | PostgreSQL                  | По `channel_id` или `id` видео                 | По `published_at` (месяц/год)     | PK(`id`), INDEX(`channel_id`, `published_at`), INDEX(`category_id`, `published_at`), INDEX(`published_at`), FULLTEXT(`title`, `description`, `tags`) | 2–3 реплики                                        |
 | VideoFiles                 | PostgreSQL                  | По `video_id`                                  | По `created_at`                   | PK(`id`), INDEX(`video_id`), INDEX(`resolution`), INDEX(`created_at`)                                                                                | 2–3 реплики                                        |
@@ -689,7 +689,7 @@ Strong используется во всех остальных таблица�
 | Likes / Dislikes           | PostgreSQL или Cassandra    | По `video_id` или `user_id`                    | По `created_at` (месяц)           | PK(`user_id`, `video_id`), INDEX(`video_id`, `created_at`), INDEX(`user_id`)                                                                         | 2–3 реплики                                        |
 | Comments                   | PostgreSQL                  | По `video_id`                                  | По `created_at`                   | PK(`id`), INDEX(`video_id`, `created_at`), INDEX(`parent_id`), INDEX(`user_id`)                                                                      | 2–3 реплики                                        |
 | Subscriptions              | PostgreSQL                  | По `subscriber_id`                             | По `created_at`                   | PK(`subscriber_id`, `channel_id`), INDEX(`channel_id`), INDEX(`created_at`)                                                                          | 2–3 реплики                                        |
-| WatchHistory               | ClickHouse или Cassandra    | По `user_id`                                   | По `updated_at` или `event_date`  | ORDER BY (`user_id`, `updated_at`), INDEX(`video_id`)                                                                                                | Репликация между DC, RF=3                          |
+| WatchHistory               | ClickHouse или Cassandra    | По `user_id`                                   | По `updated_at` или `event_date`  | ORDER BY (`user_id`, `updated_at`), INDEX(`video_id`)                                                                                                | Репликация между DC                                |
 | WatchSessions              | ClickHouse                  | По `user_id` или `video_id`                    | По `started_at` (день/месяц)      | ORDER BY (`user_id`, `started_at`), INDEX(`video_id`), INDEX(`country`)                                                                              | RF=3                                               |
 | VideoSearchIndex           | Elasticsearch               | По `video_id`                                  | По индексу времени публикации     | INDEX(`title`), INDEX(`description`), INDEX(`tags`), INDEX(`author_username`)                                                                        | Replica shards                                     |
 
@@ -699,7 +699,7 @@ Strong используется во всех остальных таблица�
 | ------------- |--------------------------------------------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | PostgreSQL    | Videos, Channels, Comments, Subscriptions, Likes | Чтение и запись разделяются между primary и replica. Наиболее нагружены Videos, Comments и Likes. Для PostgreSQL используется connection pooling через PgBouncer |
 | Redis         | VideoStats                                       | Используется Redis Cluster с несколькими shard'ами. Hot keys (video stats популярных видео) распределяются через suffix sharding                                 |
-| ClickHouse    | WatchHistory, WatchSessions                      | Основная нагрузка — массовая запись событий и аналитические запросы. Используются distributed tables и replication                                               |
+| ClickHouse    | WatchHistory, WatchSessions                      | Основная нагрузка — массовая запись событий и аналитические запросы.                                                                                             |
 | Elasticsearch | VideoSearchIndex                                 | Используются primary и replica shards для полнотекстового поиска и рекомендаций                                                                                  |
 | Медиаданные   | VideoFiles, VideoChunks                          | Видео и чанки хранятся в object storage и раздаются через CDN. Основная нагрузка снимается с backend-инфраструктуры                                              |
 
@@ -709,8 +709,8 @@ Strong используется во всех остальных таблица�
 | Данные         | Описание резервирования                                                                                            |
 | -------------- |--------------------------------------------------------------------------------------------------------------------|
 | PostgreSQL     | Ежедневный backup через pg_dump + WAL archiving + replication. Используется RAID 10 или RAID 6                     |
-| Redis          | RDB snapshots раз в сутки + AOF persistence.                                                                       |
-| ClickHouse     | Replication factor 2–3, резервирование между availability zones, ежедневные snapshots                              |
+| Redis          | RDB snapshots раз в сутки + AOF.                                                                                   |
+| ClickHouse     | Replication factor 2–3, ежедневные снапшоты                                                                        |
 | Elasticsearch  | Replica shards + snapshots индексов в object storage                                                               |
 | Медиаданные    | Видео и чанки хранятся минимум в 3 копиях в object storage + CDN cache. Используется георепликация между регионами |
 | Object storage | Amazon S3                                                                                                          |
