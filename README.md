@@ -684,8 +684,8 @@ Strong используется во всех остальных таблица�
 | Channels                   | PostgreSQL         | По hash(`id`) канала                                  | По месяцу `created_at`           | PK(`id`), INDEX(`owner_id`), INDEX(`created_at`)                                                                                                     | 2–3 реплики                                             |
 | Videos                     | PostgreSQL         | По hash(`id`) видео                                   | По `published_at`                | PK(`id`), INDEX(`channel_id`, `published_at`), INDEX(`category_id`, `published_at`), INDEX(`published_at`), FULLTEXT(`title`, `description`, `tags`) | 2–3 реплики                                             |
 | VideoFiles                 | PostgreSQL         | По hash(`video_id`)                                   | По `created_at`                  | PK(`id`), INDEX(`video_id`), INDEX(`resolution`), INDEX(`created_at`)                                                                                | 2–3 реплики                                             |
-| VideoChunks                | Redis + CDN        | По `video_file_id` + shard_suffix                     | По `created_at`                  | KEY(`video_file_id:chunk_index`), INDEX(`video_file_id`)                                                                                             | Репликация в CDN + объектное хранилище, минимум 3 копии |
-| VideoStats                 | Redis              | По `video_id` + shard_suffix                          | Без партиций                     | KEY(`video:{video_id}`)                                                                                                                              | Репликация в Redis-кластер, snapshot + AOF              |
+| VideoChunks                | Redis + CDN        | По `video_file_id` + shard_index                      | По `created_at`                  | KEY(`video_file_id:chunk_index`), INDEX(`video_file_id`)                                                                                             | Репликация в CDN + объектное хранилище, минимум 3 копии |
+| VideoStats                 | Redis              | По `video_id` + shard_index                           | Без партиций                     | KEY(`video:{video_id}`)                                                                                                                              | Репликация в Redis-кластер, snapshot + AOF              |
 | Likes / Dislikes           | PostgreSQL         | По составному ключу (`video_id`, month(`created_at`)) | По месяцу `created_at`           | PK(`user_id`, `video_id`), INDEX(`video_id`, `created_at`), INDEX(`user_id`)                                                                         | 2–3 реплики                                             |
 | Comments                   | PostgreSQL         | По составному ключу (`video_id`, month(`created_at`)) | По месяцу `created_at`           | PK(`id`), INDEX(`video_id`, `created_at`), INDEX(`parent_id`), INDEX(`user_id`)                                                                      | 2–3 реплики                                             |
 | Subscriptions              | PostgreSQL         | По составному ключу (`subscriber_id`, `channel_id`)   | По `created_at`                  | PK(`subscriber_id`, `channel_id`), INDEX(`channel_id`), INDEX(`created_at`)                                                                          | 2–3 реплики                                             |
@@ -695,7 +695,7 @@ Strong используется во всех остальных таблица�
 
 ## Пояснения к таблицам
 
-shard_suffix - это структура вида (0..N) для чанков. Например:
+shard_index - это структура вида (0..N) для чанков. Например:
 
 ```
 video:123:0
@@ -811,7 +811,7 @@ Bucket
 
 ## Алгоритм формирования главной страницы
 
-Главная страница не должна собираться на лету:
+Главная страница должна быть сформирована заранее:
 
 1. Для каждого пользователя заранее формируется feed
 2. В feed попадают:
